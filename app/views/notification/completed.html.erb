@@ -1,0 +1,11 @@
+<p> Hi <%= @task.project.client.name  %>, <br/>
+
+The task (<%= @task.title %> belonging to <%= @task.project.name%> has been marked as incomplete. It was due on
+ <%= @task.due_date %>). <br/>
+
+regards, <br/>
+Team Tasksbox <br/>
+
+<%= image_tag("https://cdn0.iconfinder.com/data/icons/flat-security-icons/512/tick.png") %>
+
+</p>

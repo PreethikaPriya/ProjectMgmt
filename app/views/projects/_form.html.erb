@@ -1,0 +1,70 @@
+
+<%= form_for @project do |f| %>
+	<% if @project.errors.any? %>
+	<div class="alert alert-danger">
+		<h4> These errors prohobited the form from being saved : </h4>
+		<ul style="color:red;" >
+			<% @project.errors.full_messages.each do |msg| %>
+			<li> <%= msg %> </li>
+			<% end %>
+		</ul>
+	</div>
+	<% end %>
+<% end %>
+
+
+
+<%= form_for @project do |f| %>
+
+<div class="form-group">
+<label> Client </label> <br/>
+<%= f.collection_select :client_id, current_user.clients, :id,:name,{prompt:"select client"},
+{class: "form-control"} %> <br/>
+
+<div class="form-group">
+<label> Name </label><br/>
+<%= f.text_field :name, class:"form-control",required: true %> <br/>
+</div>
+
+<div class="form-group">
+<label> Description</label> <br/>
+<%= f.text_field :description, class:"form-control"%> <br/>
+</div>
+
+<div class="form-group">
+<label> Estimated budget</label> <br/>
+<%= f.number_field :estimated_budget, min: 1, class:"form-control"%> <br/> <%# even text.field 
+works but number field gives u a drop down%>
+</div>
+
+<div class="form-group">
+<label> Start Date </label> <br/>
+<%= f.date_select :start_date,order:[:day,:month,:year] , class:"form-control"%> <br/>
+</div>
+
+<div class="form-group">
+<label> End Date </label> <br/>
+<%= f.date_select :end_date,order:[:day,:month,:year], class:"form-control" %> <br/>
+</div>
+
+<div class="form-group">
+<label> Status </label> <br/>
+<%#<%= f.select :status,["new","On going","completed"] %> 
+
+<%= f.radio_button :status, "new" %> New
+<%= f.radio_button :status, "On going" %> On going
+<%= f.radio_button :status, "completed" %> Completed </br>
+</div>
+
+<div class="form-group">
+<label> select categories </label> <br/>
+<%= f.collection_check_boxes :category_ids,current_user.categories,:id,:name do |b| %>
+	<%= b.check_box %>
+	<%= b.label %>
+<% end %>
+<br/>
+</div>
+
+<%= f.submit %>
+
+<% end %>

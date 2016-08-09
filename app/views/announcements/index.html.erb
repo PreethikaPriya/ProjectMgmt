@@ -1,0 +1,21 @@
+<h3> Listing Announcements </h3>
+
+
+<table class="table table-stripped">
+<thead>
+	<tr>
+		<th> Title</th>
+		<th> Msg </th>
+	</tr>
+</thead>
+<tbody>
+<% @announcements.each do |msg| %>
+<tr>
+	<td> <%= msg.title %> </td> 
+	<td> <%=msg.body %> </td>
+</tr>
+<% end %>	
+</tbody>
+
+<%= link_to "Create Announcement", new_announcement_path %>
+

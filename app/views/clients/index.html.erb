@@ -1,0 +1,93 @@
+<div class="row">
+	<div class="col-md-7">
+	<div class="page-header">
+		<h3> Listing Clients </h3>
+	</div>	
+<!--<%= link_to "Export to excel", clients_path(format: "xls") %> -->
+
+	<%= link_to clients_path(format: "xls"),class: "btn btn-info btn-sm pull-right" do %>
+	<span class="glyphicon glyphicon-download-alt"></span> Export to Excel
+	<% end %>
+
+	<script>
+	$(document).ready(function(){
+    $('#myTable').DataTable();
+	});
+	</script>
+
+<% if @clients.empty? %>
+
+	<p> NO cleints found </p>
+
+<% else %>
+
+	<table class="table table-striped" id="myTable">
+
+	<thead>
+	<tr>
+	<th>#</th>
+	<th>Name </th>
+	<th>Company </th>
+	<th>Mobile </th>
+	<th> Email </th>
+	<% if current_user.is_admin? %>
+		<th> User </th>
+	<% end %>	
+	<th> Actions </th>	
+	<th> project count </th>
+	</tr>
+	</thead>
+	<tbody>
+	<% @clients.each_with_index do |client,index| %>
+		<tr>
+		<td> <%= index + 1 %> </td>
+		<td> <%= link_to client.name.capitalize,client_path(client.id) %> </td>
+		<td> <%=  client.company.capitalize %> </td>
+		<td> <%= client.mobile %> </td>
+		<td> <%= client.email %> </td>
+
+		<% if current_user.is_admin? %>
+			<td> <%= client.user.email %> </td>
+		<% end %>	
+		<!--<td> <%= link_to "Show",client_path(client.id) %> -->
+		<td>
+			<%= link_to client_path(client.id) do %>
+			<span class="glyphicon glyphicon-eye-open"></span>
+			<% end %>
+		</td>	
+		<td> <%= client.projects.size %> </td>
+		</tr>
+	<% end %>
+	</tbody>
+	</table>
+<% end %>
+
+
+
+	<% if can? :create, Client.new %>
+		<%= link_to "Add Client", new_client_path, class: "btn btn-default" %>
+	<% end %> 	
+
+
+<%#<%= link_to "Add client", new_client_path, class:"btn btn-primary" %> 
+	</div>
+	
+	<div class="col-md-5">
+	 <h2> some statistics </h2>
+	 <p> we will soon get some statistics about world health. till then take care </p>
+	
+
+	<% data = {}
+	current_user.clients.each do |client|
+		data[client.name] = client.projects.count
+	end
+	%>
+
+	<%= pie_chart(data) %>
+	<%= column_chart(data) %>
+	<%= bar_chart(data) %>
+	</div>
+</div>
+
+
+

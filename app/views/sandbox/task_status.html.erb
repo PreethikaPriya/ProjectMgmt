@@ -1,0 +1,37 @@
+<h2> List of completed, incomplete and over due tasks </h2>
+<div id="container" style="width:100%;">  
+
+<div id="left" style="float:left; width:33%;">
+<h3> Completed tasks : <%= @task_complete.size %> </h3>
+<ol>
+<% @task_complete.each do |task| %>
+	<li> <%=task.title %> </li>
+<% end %>
+</ol>
+</div>
+
+<%#<div id="middle" width:33% >%>
+<div id="right" style="float:right; width:33%;">
+<br/>
+<h3> Incomplete tasks : <%= @task_incomplete.size %> </h3>
+<ol>
+<% @task_incomplete.each do |task| %>
+	<li> <%=task.title %> </li>
+<% end %>
+</ol>
+</div>
+
+<div id="middle" width:33% >
+<%#<div id="right" style="float:right; width:33%;">%>
+<h3>Tasks which are over due : <%= @task_due.size %> </h3>
+<ol>
+<%@task_due.each do |task| %>
+ 	<li> <%= task.title %> </li>
+ <% end %>
+</ol>
+</div>
+
+</div>                                                                     
+
+
+	

@@ -1,0 +1,69 @@
+<h3> listing projects </h3>
+<% @projects.each do |project| %>
+	<h3> <%=  project.name %> </h3>
+	<% if project.tasks.empty? %>
+		<p> no tasks found </p>
+	<% else %>
+		<h4> total task : <%= project.tasks.size %> </h4>
+		<ul>
+		<% project.tasks.each do |task| %>
+			<li>
+			<% if task.is_completed %>
+				<s> <%= task.title %> </s>
+			<% else %>
+				<%= task.title %>
+			<% end %>
+			</li>
+		<%end %>
+		</ul>
+	<% end %>
+<% end %>
+
+
+
+
+<% if false %>
+<h2> Listing projects along with respective tasks </h2>
+<ol>
+<% @projects.each do |project| %>
+ 	<li> Project : <%= project.name %> </li>
+ 		 Tasks: 			
+ 	<ul>
+ 	<% task = project.tasks %>   <%# if project.tasks.empty?%>
+ 	<% if task.empty? %>		  <%# no task found %>
+ 			No task assigned yet 
+ 	<%else%>
+ 			<% task.each do |t| %>
+ 		  		<li><%= t.title %> </li>
+	    	<% end %>	
+	<%end %>
+	</ul>
+	<br/ >
+<% end %>
+</ol>
+<% end %>
+
+
+
+<% if false %>
+<h2> Listing projects along with respective tasks </h2>
+<ol>
+<% @projects.each do |project| %>
+ 	<li> Project : <%= project.name %> </li>
+ 		 Tasks: 			
+ 	<ul>
+ 	<% task = Task.where('project_id = ?',project.id) %>
+ 	<% if task.empty? %>
+ 			No task assigned yet 
+ 	<%else%>
+ 			<% task.each do |t| %>
+ 		  		<li><%= t.title %> </li>
+	    	<% end %>
+	<%end %>
+	</ul>
+	<br/ >
+<% end %>
+</ol>
+<% end %>
+
+

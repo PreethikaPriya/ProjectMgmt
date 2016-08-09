@@ -1,0 +1,53 @@
+
+<h3> Project Info </h3>
+<h3> <%= @project.name %> </h3>
+	<table border="1">
+	<thead>
+		<tr>
+			<th> Name </th>
+			<th> Client </th>
+			<th> Start date </th>
+			<th> End date </th>
+			<th> Status </th>
+			<th> EStimated budget </th>
+		</tr>
+	</thead>
+
+	<tbody>
+			<tr>
+				<td> <%= @project.name %> </td>
+				<td> <%= Client.find(@project.client_id).name %> </td>
+				<td> <%= @project.start_date.strftime("%A, %d, %B %Y") %> </td>
+				<td> <%= @project.end_date.strftime("%A, %d, %b %y") %> </td>
+				<td> <%= @project.status %> </td>
+				<td> <%= @project.estimated_budget %> </td>
+			</tr>
+	</tbody>
+	</table>
+
+
+<% if @project.tasks.empty? %>
+	No tasks found 
+<% else %>
+<h3> Total tasks : <%= @project.tasks.size %> </h3>
+<table border="1">
+<thead>
+<tr>
+	<th> Task </th>
+	<th> Due date </th>
+	<th> Completed </th>
+</tr>
+</thead>
+<tbody>
+	<% @project.tasks.each do |task| %>
+	<tr>
+	  <td> <%= task.title %>  </td>
+	  <td> <%= task.due_date %> </td>
+	  <td> <%= task.is_completed ? "yes" : "no" %> </td>
+	 </tr>
+	<% end %>
+<% end %>	
+</tbody>
+</table>
+
+

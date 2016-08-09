@@ -1,0 +1,11 @@
+<p> Hi <%= @task.project.client.name  %>, <br/>
+
+The task (<%= @task.title %> belonging to <%= @task.project.name%> has been completed. It was due on
+ <%= @task.due_date %>). <br/>
+
+regards, <br/>
+Team Tasksbox <br/>
+
+<%= image_tag("http://www.teachersuperstore.com.au/wp-content/uploads/2012/12/Incomplete-Please-Finish-Teacher-Stamp.jpg") %>
+
+</p>

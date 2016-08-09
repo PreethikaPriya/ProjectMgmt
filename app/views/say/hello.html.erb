@@ -1,0 +1,80 @@
+<h1>Hello World</h1>
+<a href="/say/goodbye"> Say Goodbye </a>
+<%= link_to "say goodbye (ruby)",say_goodbye_path %>
+
+<%= link_to "say goodbye (ruby)", "/say/goodbye" %>
+<%= link_to "say prodcts (ruby" , say_products_path %>
+
+
+
+
+
+
+
+
+<p>Find me in app/views/say/hello.html.erb</p>
+
+2 + 2 =
+<%= 2 + 2 %>
+
+<!-- this is comment for html
+movies = ["u turn" , "kabali" , "sultan" ,"thithi","independence day"]
+-->
+<% movies = ["u turn" , "kabali" , "sultan" ,"thithi","independence day"] %>
+
+<ol>
+<li> apple </li>
+<li> mango </li>
+<li> orange </li>
+</ol>
+
+<h3> Now showing </h3>
+<ol>
+<% movies.each 	do |movie| %>
+<li> <%= movie %> </li>
+<% end %>
+</ol>
+
+
+<% signed_in = [true,false].sample %>
+
+<% if signed_in %>
+	<p> Welcome user </p>
+<% else %>
+	<p> login to continue </p>
+<% end %>
+
+<%# this is a comment in ruby %>
+
+
+
+
+movies_new = {" u turn" => ["veeresh, lido", 120, 8.4],
+"kabali" => ["inox, lido", 144,9.2],
+"sultan" => ["inox, lido", 132,9.8] }
+
+<% movies_new = {" U turn" => ["Veeresh, Lido", 120, 8.4],
+"Kabali" => ["Inox, Lido", 144,9.2],
+"Sultan" => ["Inox, Lido", 132,9.8] } %>
+
+<h4> Now Showing </h4>
+<ol>
+<% movies_new.each do |key,value| %>
+<li> <%= key %> </li>
+<ul>
+<li> Theatre - <%= value [0] %> </li>
+<li> Duration - <%= value[1] %> mins</li> 
+<li> Rating - <%= value[2] %> </li> 
+</ul>
+<% end %>
+</ol>
+
+
+
+
+
+
+
+
+
+

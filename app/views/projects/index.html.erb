@@ -1,0 +1,122 @@
+<div class="row">
+<div class="col-md-7">
+	
+	<div class="page-header">
+		<h3> Listing projects </h3>
+	</div>
+	
+	<b> Filter by:
+		<%= link_to "new",projects_path(status: "new") %> |
+		<%= link_to "on-going",projects_path(status:"On going") %>|
+		<%= link_to "completed",projects_path(status:"completed") %>|
+		<%= link_to "all",projects_path %>
+	</b>
+	<br/>
+
+
+	<b> Filter by clients:
+		<% @current_user.clients.each do |client| %>
+			<%= link_to client.name,projects_path(client_id: client.id) %> |
+		<% end %>
+		<%= link_to "all",projects_path %>
+	</b>
+
+	<%= notice %>
+	
+	<script>
+	$(document).ready(function(){
+    $('#myTable').DataTable();
+	});
+	</script>
+
+
+	<% if @projects.empty? %>
+		<p> no projects found </p>
+	<% else %>
+
+
+		<h4> Total projects : <%= @projects.size %> </h4>
+		<table class="table table-striped" id="myTable">
+		<thead>
+			<tr>
+				<th> Name </th>
+				<th> Client </th>
+				<th> Start date </th>
+				<th> End date </th>
+				<th> EStimated budget </th>
+				<th> Status </th>
+				<th> Actions </th>
+			</tr>
+		</thead>
+
+		<tbody>
+			<% @projects.each do |project| %>
+				<tr>
+					<td> <%= project.name %> </td>
+					<td> <%= Client.find(project.client_id).name %> </td>
+					<%# project.client.nil? ? " client n/a" : project.client.name %>
+					<td> <%= project.start_date.strftime("%A, %d, %B %Y") %> </td>
+					<td> <%= project.end_date.strftime("%A, %d, %b %y") %> </td>
+					<td> <%= project.estimated_budget %> </td>
+					<td> <%= project.status %> </td>
+					<!--<td> <%= link_to "Show",project_path(project.id) %> </td> <%# instead of project.id even project wil work . it will pluck only id %> -->
+					<td>
+						<%= link_to project_path(project.id) do %>
+							<span class="glyphicon glyphicon-eye-open"></span>
+						<% end %>
+					</td>
+				</tr>
+			<% end %>
+		</tbody>
+	</table>
+	<% end %>
+
+
+	<%= link_to "add projects",new_project_path, class:"btn btn-info"%>
+	<%= link_to "list project", projects_path, class:"btn btn-primary" %>
+	<%= link_to "list clients",clients_path, class:"btn btn-success" %>
+
+	</div>
+
+	
+	<div class="col-md-5">
+		<div class ="page-header">
+			<h2> Some Statistics </h2>
+		</div>
+		
+		<% data = { "new" => @tot.where('status=?',"new").count,
+					"On going" => @tot.where('status=?',"On going").count,
+						"completed" => @tot.where('status=?',"completed").count,} %>
+		<%= pie_chart(data) %>
+
+		 <% data = {} 
+		@projects.each do |project|
+			data[project.name] = project.tasks.count%>
+		<% end %>
+		<%= column_chart(data) %>
+	</div>
+
+</div>
+
+
+<!--New, ON going etc should match the values speciifed i forms i.e in new forms -->
+
+
+
+ <!-- data ={}
+data["new"] = @projects.where('status=?', "new").count
+data["On going"] = @projects.where('status=?', "On going").count
+data["completed"] = @projects.where('status=?',"completed" ).count
+
+-->
+
+<!-- data = {}
+statuses = @projects.pluck(:status).uniq
+statuses.each do |status|
+data[status] = @projects.where('status=?', status).size
+end
+-->
+
+
+
+

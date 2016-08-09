@@ -1,0 +1,82 @@
+<div class="row">
+	<div class="col-md-7">
+		<div class="page-header">
+			<h2> <%= @client.name %> <br/>
+			<small>
+			<%= @client.code %>
+			<span class="glyphicon glyphicon-briefcase"></span> <%= @client.company %>
+			<span class="glyphicon glyphicon-earphone"></span> <%= @client.mobile %>
+			<span class="glyphicon glyphicon-envelope"></span> <%= mail_to @client.email %>
+			</small>
+			</h2>
+		</div>
+		<div class="panel panel-primary" >
+		<div class="panel-heading">Projects  </div>
+			<div class="panel-body">
+			<ul class="list-group">
+				<% for project in @client.projects %>
+				<li class="list-group-item"> <%= project.name %> </li>
+				<% end %>
+			</ul>	
+			</div>
+		</div>	
+	</div>		
+
+	<div class="col-md-5">
+	</div>
+
+</div>
+
+
+<div class="row">
+	<div class="col-md-12">
+		<div class="page-header">
+			<h2> Timeline </h2>
+		</div>
+		<% data =[]
+		@client.projects.each do |project|
+			data.push([project.name,project.start_date,project.end_date])
+		 end 	
+		%>
+		<%= data %>	<br/>
+		<%= timeline(data) %>
+	</div>
+</div>
+
+
+<p> <%= @client.company%> <%= @client.email%> <%= @client.mobile %></p>
+
+<% if can? :update, Client.new %>
+<%= link_to "edit",edit_client_path(@client.id), class:"btn btn-info" %>
+<% end %>
+
+<% if can? :destroy, Client.new %>
+<%= link_to "destroy", client_path(@client.id), data: {method: :delete, confirm: "are you sure?"},class:"btn btn-danger" %>
+<% end %>
+
+
+<% if @client.projects.empty? %>
+	No projects found 
+<% else %>
+<h3> Total projects : <%= @client.projects.size %> </h3>
+<ul>
+	<% @client.projects.each do |project| %>
+	<li> <%= link_to project.name,project_path(project.id) %> </li>
+	<% end %>
+</ul>
+<% end %>	
+
+
+<%= link_to "Add project", new_client_path %>
+<%= link_to "list clients",clients_path %>
+
+  
+<h4> Total tasks for this client is
+Inner join
+<%= Task.joins(:project).where('projects.client_id=?',@client.id).size %>
+</h4>
+
+Select in 
+<%= Task.where(project_id: @client.project_ids).size %>
+
+<%# @client.projects.pluck(:id) %>

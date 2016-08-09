@@ -1,0 +1,37 @@
+<h3> Listing Clients </h3>
+
+<%#<%= link_to "Export to excel", clients_path(format: "xls") %>
+<%#<% if @clients.empty? %>
+
+	<!--<p> NO cleints found </p> -->
+
+<%#<% else %> 
+
+	<table border= "1">
+
+	<thead>
+	<tr>
+	<th>#</th>
+	<th>Name </th>
+	<th>Company </th>
+	<th>Mobile </th>
+	<th> Email </th>
+	<th> ACtions </th>	
+	<th> project count </th>
+	</tr>
+	</thead>
+	<tbody>
+	<% @clients.each_with_index do |client,index| %>
+		<tr>
+		<td> <%= index + 1 %> </td>
+		<td> <%= link_to client.name.capitalize,client_url(client.id) %> </td>
+		<td> <%=  client.company.capitalize %> </td>
+		<td> <%= client.mobile %> </td>
+		<td> <%= client.email %> </td>
+		<td> <%= link_to "Show",client_url(client.id) %>
+		<td> <%= client.projects.size %> </td>
+		</tr>
+	<% end %>
+	</tbody>
+	</table>
+<%#<% end %>
